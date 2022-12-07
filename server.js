@@ -11,17 +11,16 @@ app.use(express.json())
 
 
 
-let db,
-    dbConnectionStr = process.env.DB_STRING,
-    dbName = 'test'
+
 
 MongoClient.connect(dbConnectionStr, { useUnifiedTopology: true })
     .then(client => {
         console.log(`Connected to ${dbName} Database`)
         db = client.db(dbName)
-    })
-    
-
+  
+let db,
+    dbConnectionStr = process.env.DB_STRING,
+    dbName = 'test'
 
 app.get('/',(request, response)=>{
     db.collection('rappers').find().sort({likes: -1}).toArray()
@@ -67,6 +66,15 @@ app.delete('/deleteRapper', (request, response) => {
     .catch(error => console.error(error))
 
 })
+    .catch(console.error)
+
+
+
+})
+    
+
+
+
 
 app.listen(process.env.PORT || PORT, ()=>{
     console.log(`Server running on port ${PORT}`)
