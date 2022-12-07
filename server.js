@@ -4,6 +4,12 @@ const MongoClient = require('mongodb').MongoClient
 const PORT = 2121
 require('dotenv').config()
 
+app.set('view engine', 'ejs')
+app.use(express.static('public'))
+app.use(express.urlencoded({ extended: true }))
+app.use(express.json())
+
+
 
 let db,
     dbConnectionStr = process.env.DB_STRING,
@@ -15,10 +21,6 @@ MongoClient.connect(dbConnectionStr, { useUnifiedTopology: true })
         db = client.db(dbName)
     })
     
-app.set('view engine', 'ejs')
-app.use(express.static('public'))
-app.use(express.urlencoded({ extended: true }))
-app.use(express.json())
 
 
 app.get('/',(request, response)=>{
