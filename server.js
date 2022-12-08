@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
 const MongoClient = require('mongodb').MongoClient
-const PORT = 2121
+const PORT = process.env.PORT || 3000
 require('dotenv').config()
 
 app.set('view engine', 'ejs')
@@ -74,8 +74,12 @@ app.delete('/deleteRapper', (request, response) => {
     
 
 
-
-
-app.listen(process.env.PORT || PORT, ()=>{
-    console.log(`Server running on port ${PORT}`)
+connectDB().then(() => {
+    app.listen(PORT, () => {
+        console.log("listening for requests");
+    })
 })
+
+// app.listen(process.env.PORT || PORT, ()=>{
+//     console.log(`Server running on port ${PORT}`)
+// })
