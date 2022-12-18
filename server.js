@@ -17,13 +17,13 @@ app.use(express.json())
 
 
 
-
+let conn
 
 const connectDB = async () => {
     try {
-        const conn = await mongoose.connect("mongodb+srv://jaynakagawa777:mongod123@cluster0.t6yfhjw.mongodb.net/?retryWrites=true&w=majority");
+        conn = await mongoose.connect("mongodb+srv://jaynakagawa777:mongod123@cluster0.t6yfhjw.mongodb.net/?retryWrites=true&w=majority");
         console.log(`MongoDB Connected!!!`);
-        
+
     } catch (error) {
         console.log(error);
         process.exit(1);
@@ -35,22 +35,36 @@ connectDB().then(() => {
     app.listen(PORT, () => {
         console.log(`Listening on port ${PORT}`);
     })
-    
-    
- 
+
+
+
 })
 
+const Cat = mongoose.model('Cat', { name: String });
 
 let db,
     // dbConnectionStr = process.env.DB_STRING,
     dbName = 'test'
 
-    app.get("/", async (req, res) => {
-        
-        let item = await conn.db("my_db")
-                    .collection("my_collection")
-                    .findOne({my_item: my_item})
-    
-        return res.json(item)
-    })
+app.get("/", async (req, res) => {
 
+    // let item = await conn.db("my_db")
+    //             .collection("my_collection")
+    //             .findOne({my_item: my_item})
+
+
+    
+
+    const kitty = new Cat({ name: 'Zildjian' });
+    await kitty.save()
+
+    return res.json({test: 1})
+})
+
+app.get("/cats", async (req, res) => {
+
+   let cats = await Cat.find()
+   
+
+    return res.json(cats)
+})
