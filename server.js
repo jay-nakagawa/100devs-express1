@@ -3,14 +3,17 @@ const app = express()
 const mongoose = require('mongoose')
 const MongoClient = require('mongodb').MongoClient
 const PORT = process.env.PORT || 3000
+const cors = require('cors')
 // const client = new MongoClient(connectDB)
 
 require('dotenv').config()
 
+app.use(cors())
 app.set('view engine', 'ejs')
 app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
+
 
 
 
