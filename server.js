@@ -21,7 +21,7 @@ let conn
 
 const connectDB = async () => {
     try {
-        conn = await mongoose.connect("mongodb+srv://jaynakagawa777:mongod123@cluster0.t6yfhjw.mongodb.net/?retryWrites=true&w=majority");
+        conn = await mongoose.connect(process.env.MONGO_CONNECTION_STRING);
         console.log(`MongoDB Connected!!!`);
 
     } catch (error) {
